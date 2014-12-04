@@ -1,7 +1,6 @@
 package Classes;
 
 import java.util.Date;
-import javax.persistence.Column;
 
 
 import javax.persistence.Entity;
@@ -10,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "OFFRE")
@@ -20,8 +20,13 @@ public class Offre {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int identifiant;
+    private String titre;
+    private String remuneration;
+
     private String description;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateDebut;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFin;
     private int nbPoste;
     private int duree;
@@ -106,20 +111,36 @@ public class Offre {
         this.contrat = contrat;
     }
 
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public String getRemuneration() {
+        return remuneration;
+    }
+
+    public void setRemuneration(String remuneration) {
+        this.remuneration = remuneration;
+    }
+
 	// Constructors
     public Offre() {
     }
 
-    public Offre(String description, Date dateDebut, Date dateFin, int nbPoste, int duree, Annonceur annonceur, Metier metier, Contrat contrat) {
+	// Methods
+
+    public Offre(String titre, String remuneration, String description, Date dateDebut, Date dateFin, int nbPoste, int duree) {
+        this.titre = titre;
+        this.remuneration = remuneration;
         this.description = description;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.nbPoste = nbPoste;
         this.duree = duree;
-        this.annonceur = annonceur;
-        this.metier = metier;
-        this.contrat = contrat;
     }
-	// Methods
 
 }

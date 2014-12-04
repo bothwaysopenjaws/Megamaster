@@ -30,11 +30,11 @@ public class Test {
             }
             
             AdresseFacade adresseFacade = new AdresseFacade(session);
-//            adresseFacade.creer(new Adresse("4", "Rue des cerises", "LAVAL", "53000", "FRANGLETERRE"));
-//            
-//            System.out.println("YES");
+            adresseFacade.creer(new Adresse("4", "Rue des cerises", "LAVAL", "53000", "FRANGLETERRE"));
+            
+            System.out.println("YES");
 
-            Adresse adresse = adresseFacade.derniereInsertion();
+            Adresse adresse = adresseFacade.litParId(2);
             System.out.println("voilà" + adresse.getVille());
             
             

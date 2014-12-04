@@ -26,7 +26,8 @@ public class Adresse {
 
 	// Constructors
     public Adresse(String numero, String rue, String ville, String codePostal, String Pays) {
-
+        
+        this.numero = numero;
         this.rue = rue;
         this.ville = ville;
         this.codePostal = codePostal;
