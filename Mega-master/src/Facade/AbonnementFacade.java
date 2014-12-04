@@ -47,7 +47,7 @@ public class AbonnementFacade {
     }
     public Abonnement derniereInsertion() {
         try {
-            return (Abonnement) session.createQuery("from Abonnement a where a.identifiant = MAX(:identifiant)").uniqueResult();
+            return (Abonnement) session.createQuery("from Abonnement a where a.identifiant = max(Abonnement.identifiant)").uniqueResult();
         } catch (Exception e) {
             return null;
         }

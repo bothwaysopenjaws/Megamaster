@@ -15,6 +15,7 @@ public class Candidature {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int identifiant;
+    private String titre;
     private String mail;
     private String nom;
     private String prenom;
@@ -76,22 +77,32 @@ public class Candidature {
     }
 
     public void setDateEmission(Date dateEmission) {
-        this.dateEmission = dateEmission;
+        this.dateEmission = dateEmission;        
     }
-    // Constructors
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+    
+    
+    //Constructors
 
     public Candidature() {
     }
 
-    public Candidature(String mail, String nom, String prenom, String URLCV, String uRLLettreMotive, Date dateEmission) {
+	// Methods
+
+    public Candidature(String titre, String mail, String nom, String prenom, Date dateEmission) {
+        this.titre = titre;
         this.mail = mail;
         this.nom = nom;
         this.prenom = prenom;
-        this.URLCV = URLCV;
-        this.uRLLettreMotive = uRLLettreMotive;
         this.dateEmission = dateEmission;
     }
-	// Methods
 
 
 }
