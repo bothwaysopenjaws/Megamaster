@@ -47,15 +47,11 @@ public class AdresseFacade {
     }
     public Adresse derniereInsertion() {
         try {
-            //return (Adresse) session.createQuery("from Adresse a where a.identifiant = MAX(:Adresse.identifiant)").uniqueResult();
-            return (Adresse) session.createQuery("select max(ID) from Adresse as a ").uniqueResult();
+            return (Adresse) session.createQuery("SELECT from ADRESSE a where a.identifiant = MAX(ADRESSE.identifiant)").uniqueResult();
         } catch (Exception e) {
             return null;
         }
-    } 
-    
-    
-
+    }       
     
     
 }

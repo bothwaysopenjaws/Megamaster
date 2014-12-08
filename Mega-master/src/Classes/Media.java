@@ -1,4 +1,5 @@
 package Classes;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,11 +17,11 @@ public class Media {
     private int identifiant;
     private int nom;
     private String url;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private TypeMedia typeMedia;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Artiste artiste;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Categorie categorie;
 
     // Getters and setters

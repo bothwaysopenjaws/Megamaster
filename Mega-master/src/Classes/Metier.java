@@ -1,4 +1,5 @@
 package Classes;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ public class Metier {
     private int identifiant;
     private String nom;
     private String description;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Domaine domaine;
 
     // Getters and setters
