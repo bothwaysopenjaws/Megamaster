@@ -1,6 +1,7 @@
 package Classes;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 
 
@@ -25,9 +26,9 @@ public class Historique {
     private Date dateDebut;
     private Date dateFin;
     private String description;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private TypeContrat typeContrat;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Artiste artiste;
 
     // Getters and setters

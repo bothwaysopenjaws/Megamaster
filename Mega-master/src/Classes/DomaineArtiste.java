@@ -1,6 +1,7 @@
 package Classes;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,11 +17,11 @@ public class DomaineArtiste {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)    
     private int identifiant;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Niveau niveau;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Domaine domaine;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Artiste artiste;
 
     // Getters and setters

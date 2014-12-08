@@ -1,13 +1,14 @@
 package Classes;
 
 import java.util.Date;
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name = "ARTISTE")
@@ -19,14 +20,16 @@ public class Artiste {
     private int identifiant;
     private String nom;
     private String prenom;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateInscription;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateNaissance;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Adresse adresse;
     private String iD;
     private String password;
     private String mail;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Compagnie compagnie;
 
     // Getters and setters
@@ -115,14 +118,14 @@ public class Artiste {
     public Artiste() {
     }
 
-    public Artiste(String nom, String prenom, Date dateNaissance, String iD, String password, String mail, Compagnie compagnie) {
+    public Artiste(String nom, String prenom, Date dateNaissance, String iD, String password, String mail, Adresse adresse ) {
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
         this.iD = iD;
         this.password = password;
         this.mail = mail;
-        this.compagnie = compagnie;
+        this.adresse = adresse;
     }
 
 	// Methods

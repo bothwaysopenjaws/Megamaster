@@ -1,5 +1,6 @@
 package Classes;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ public class Competence {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int identifiant;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private TypeCompetence typeCompetence;
     private int niveauCompetence;
     private String description;

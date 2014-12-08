@@ -5,12 +5,13 @@
  */
 package forms;
 
-import Classes.Adresse;
+import Classes.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import Facade.*;
 import static Hibernate.HibernateUtil.getSessionFactory;
+import java.util.Date;
 
 /**
  *
@@ -29,19 +30,20 @@ public class Test {
                 tx = session.beginTransaction();
             }
             
-            AdresseFacade adresseFacade = new AdresseFacade(session);
-            adresseFacade.creer(new Adresse("4", "Rue des cerises", "LAVAL", "53000", "FRANGLETERRE"));
+
+            Adresse adresse = new Adresse("4", "Rue des cerises", "LAVAL", "53000", "FRANGLETERRE");
+            
+         Date dateNaissance = new Date(1992, 11, 24);            
+            ArtisteFacade artisteFacade = new ArtisteFacade(session);
+            
+            artisteFacade.creer(new Artiste("Jeanne", "Calman", dateNaissance, "JeanId", "Michelpwd", "jeanne@calmant", adresse));
             
             System.out.println("YES");
 
-            Adresse adresse = adresseFacade.litParId(2);
-            System.out.println("voilà" + adresse.getVille());
+           
             
             
-            
-            
-            
-            
+            //session.flush();
             tx.commit();
 
         } catch (Exception re) {

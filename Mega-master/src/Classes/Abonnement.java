@@ -1,6 +1,7 @@
 package Classes;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +18,7 @@ public class Abonnement {
     @GeneratedValue(strategy = GenerationType.AUTO)    
     private int identifiant;
     private int restant;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private TypeAbonnement typeAbonnement;
 
     // Getters and setters

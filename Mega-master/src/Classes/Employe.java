@@ -1,4 +1,5 @@
 package Classes;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class Employe {
     private String prenom;
     private String email;
     private String tel;
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Adresse adresse;
     @ManyToOne
     private Statut statut;

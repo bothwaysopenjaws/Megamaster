@@ -1,7 +1,7 @@
 package Classes;
 
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +20,7 @@ public class Annonceur {
     private int nom;
     private int mail;
     private int telephone;
-        @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Abonnement abonnement;
 
 	// Getters and setters
