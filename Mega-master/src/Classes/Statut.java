@@ -1,6 +1,7 @@
 package Classes;
 
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,9 +41,33 @@ public class Statut {
     public Statut() {
     }
 
-    public Statut(int identifiant, String libelle) {
+    public Statut(String libelle) {
         this.libelle = libelle;
     }
 
 	// Methods
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.libelle);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Statut other = (Statut) obj;
+        if (!Objects.equals(this.libelle, other.libelle)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

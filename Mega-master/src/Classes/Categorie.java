@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,4 +43,28 @@ public class Categorie {
     }
 
     // Methods
+    
+@Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.libelle);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Categorie other = (Categorie) obj;
+        if (!Objects.equals(this.libelle, other.libelle)) {
+            return false;
+        }
+
+        return true;
+    }    
+    
 }

@@ -38,11 +38,4 @@ public class DiffuseurFacade {
         return session.createQuery("from Contrat").list();
     }
 
-    public Contrat litParId(Integer id) {
-        try {
-            return (Contrat) session.createQuery("from Contrat a where a.identifiant = :identifiant").setInteger("identifiant", id).uniqueResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

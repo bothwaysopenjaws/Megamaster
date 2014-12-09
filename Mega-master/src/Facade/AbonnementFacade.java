@@ -1,11 +1,4 @@
-/*
- * OperationFacade.java
- *
- * Created on 8 decembre 2006, 12:14
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+
 package Facade;
 
 import Classes.Abonnement;
@@ -20,24 +13,40 @@ public class AbonnementFacade {
     public AbonnementFacade(Session session) {
         this.session = session;
     }
-
+    /**
+     * Ajout d'un abonnement dans la BDD
+     * @param abonnement
+     */
     public void creer(Abonnement abonnement) {
         session.persist(abonnement);
     }
-
+    /**
+     * modification d'un abonnement dans la BDD
+     * @param abonnement
+     */
     public void modifier(Abonnement abonnement) {
         Abonnement entity = (Abonnement) session.merge(abonnement);
         session.persist(entity);
     }
-
+    /**
+     * Ajout d'un supprimer dans la BDD
+     * @param abonnement
+     */
     public void supprimer(Abonnement abonnement) {
         session.delete(abonnement);
     }
-
+    /**
+     * liste de tous les abonnements dans la BDD
+     * @return 
+     */
     public List<Abonnement> lister() {
         return session.createQuery("from Abonnement").list();
     }
-
+    /**
+     * Recherche d'un abonnement
+     * @param id
+     * @return 
+     */
     public Abonnement litParId(Integer id) {
         try {
             return (Abonnement) session.createQuery("from Abonnement a where a.identifiant = :identifiant").setInteger("identifiant", id).uniqueResult();
@@ -45,11 +54,5 @@ public class AbonnementFacade {
             return null;
         }
     }
-    public Abonnement derniereInsertion() {
-        try {
-            return (Abonnement) session.createQuery("from Abonnement a where a.identifiant = max(Abonnement.identifiant)").uniqueResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }    
+
 }

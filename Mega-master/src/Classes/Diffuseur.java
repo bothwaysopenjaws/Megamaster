@@ -1,6 +1,7 @@
 package Classes;
 
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -63,7 +64,30 @@ public class Diffuseur {
         this.mail = mail;
     }
 
+    
 
 	// Methods
 
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.nom);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Diffuseur other = (Diffuseur) obj;
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        return true;
+    }
 }

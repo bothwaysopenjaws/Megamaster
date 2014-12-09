@@ -131,8 +131,6 @@ public class Offre {
     public Offre() {
     }
 
-	// Methods
-
     public Offre(String titre, String remuneration, String description, Date dateDebut, Date dateFin, int nbPoste, int duree) {
         this.titre = titre;
         this.remuneration = remuneration;
@@ -142,5 +140,10 @@ public class Offre {
         this.nbPoste = nbPoste;
         this.duree = duree;
     }
+	// Methods
+
+    
+    
+    
 
 }

@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,9 +40,34 @@ public class TypeCompetence {
     public TypeCompetence() {
     }
 
-    public TypeCompetence(int identifiant, String libelle) {
+    public TypeCompetence( String libelle) {
         this.libelle = libelle;
     }
 
 	// Methods
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.libelle);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TypeCompetence other = (TypeCompetence) obj;
+        if (!Objects.equals(this.libelle, other.libelle)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
 }

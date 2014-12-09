@@ -37,12 +37,4 @@ public class DomaineArtisteFacade {
     public List<DomaineArtiste> lister() {
         return session.createQuery("from DomaineArtiste").list();
     }
-
-    public DomaineArtiste litParId(Integer id) {
-        try {
-            return (DomaineArtiste) session.createQuery("from DomaineArtiste a where a.identifiant = :identifiant").setInteger("identifiant", id).uniqueResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

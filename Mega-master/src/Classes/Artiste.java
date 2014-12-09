@@ -1,6 +1,7 @@
 package Classes;
 
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -126,7 +127,40 @@ public class Artiste {
         this.password = password;
         this.mail = mail;
         this.adresse = adresse;
+        this.dateInscription = new Date();
+        
     }
 
 	// Methods
+    
+@Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.nom);
+        hash = 37 * hash + Objects.hashCode(this.prenom);
+        hash = 37 * hash + Objects.hashCode(this.dateNaissance);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Artiste other = (Artiste) obj;
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        if (!Objects.equals(this.prenom, other.prenom)) {
+            return false;
+        }
+        if (!Objects.equals(this.dateNaissance, other.dateNaissance)) {
+            return false;
+        }
+        return true;
+    }    
+    
 }

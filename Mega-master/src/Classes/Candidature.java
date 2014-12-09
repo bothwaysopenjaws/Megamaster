@@ -94,8 +94,6 @@ public class Candidature {
     public Candidature() {
     }
 
-	// Methods
-
     public Candidature(String titre, String mail, String nom, String prenom, Date dateEmission) {
         this.titre = titre;
         this.mail = mail;
@@ -103,6 +101,12 @@ public class Candidature {
         this.prenom = prenom;
         this.dateEmission = dateEmission;
     }
+	// Methods
+    
+    
+    
+    
+
 
 
 }

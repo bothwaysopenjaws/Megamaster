@@ -1,6 +1,7 @@
 package Classes;
 
 
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,4 +56,12 @@ public class Abonnement {
         this.typeAbonnement = typeAbonnement;
     }
     // Methods
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.identifiant);
+        return hash;
+    }
+
+
 }

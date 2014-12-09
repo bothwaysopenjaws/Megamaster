@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,9 +39,34 @@ public class TypeContrat {
     public TypeContrat() {
     }
 
-    public TypeContrat(int identifiant, String libelle) {
+    public TypeContrat(String libelle) {
         this.libelle = libelle;
     }
 
 	// Methods
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 41 * hash + Objects.hashCode(this.libelle);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TypeContrat other = (TypeContrat) obj;
+        if (!Objects.equals(this.libelle, other.libelle)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
 }

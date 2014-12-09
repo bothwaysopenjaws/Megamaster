@@ -1,11 +1,4 @@
-/*
- * OperationFacade.java
- *
- * Created on 8 decembre 2006, 12:14
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+
 package Facade;
 
 import Classes.Annonceur;
@@ -20,24 +13,45 @@ public class AnnonceurFacade {
     public AnnonceurFacade(Session session) {
         this.session = session;
     }
-
+    /**
+     * Ajout d'un Annonceur dans la BDD
+     */    
+    
+    /**
+     * Ajout d'un Annonceur dans la BDD
+     * @param annonceur
+     */
     public void creer(Annonceur annonceur) {
         session.persist(annonceur);
     }
-
+    /**
+     * Modification d'un Annonceur dans la BDD
+     * @param annonceur
+     */  
     public void modifier(Annonceur annonceur) {
         Annonceur entity = (Annonceur) session.merge(annonceur);
         session.persist(entity);
     }
-
+    /**
+     *  Suppression d'un annonceur dans la BDD
+     * @param annonceur
+     */  
     public void supprimer(Annonceur annonceur) {
         session.delete(annonceur);
     }
+    
+    /**
+     * Liste des annonceurs
+     */      
 
     public List<Annonceur> lister() {
         return session.createQuery("from Annonceur").list();
     }
-
+    /**
+     * Recherche d'un annonceur en fonction de son ID
+     * @param id
+     * @return 
+     */  
     public Annonceur litParId(Integer id) {
         try {
             return (Annonceur) session.createQuery("from Annonceur a where a.identifiant = :identifiant").setInteger("identifiant", id).uniqueResult();
@@ -45,4 +59,5 @@ public class AnnonceurFacade {
             return null;
         }
     }
+    
 }
