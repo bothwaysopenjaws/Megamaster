@@ -57,6 +57,6 @@ public class CompagnieFacade {
      * @return 
      */      
     public List<Compagnie> listerArtiste(int identifiant) {
-        return session.createQuery("select artiste.nom artiste.prenom from Artiste artiste join artiste.identifiant_compagnie Compagnie where compagnie.identifiant:identifiant").setInteger("identifiant", identifiant).list();
+        return session.createQuery("from Artiste where compagnie.identifiant = :identifiant").setInteger("identifiant", identifiant).list();
     }
 }

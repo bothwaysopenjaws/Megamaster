@@ -45,6 +45,17 @@ public class CompetenceFacade {
     public List<Competence> lister() {
         return session.createQuery("from Competence").list();
     }
+    
+    /**
+     * liste des artistes d'une Competence
+     * @param identifiant
+     * @return 
+     */      
+    public List<Competence> listerArtiste(int identifiant) {
+        return session.createQuery("from Artiste where Competence.identifiant = :identifiant").setInteger("identifiant", identifiant).list();
+    }    
+    
+    
 
 
 }

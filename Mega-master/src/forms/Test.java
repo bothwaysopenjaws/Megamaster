@@ -11,8 +11,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import Facade.*;
 import static Hibernate.HibernateUtil.getSessionFactory;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,6 +20,10 @@ import java.util.List;
 public class Test {
 
     public static void main(String args[]) {
+        
+        LoadingFrame loadingFrame = new LoadingFrame();
+        loadingFrame.setVisible(true);
+        loadingFrame.ChangeStatementLabel("Connexion à la base de données...");        
         Transaction tx = null;
         Session session = getSessionFactory().getCurrentSession();
         try {
@@ -29,8 +31,12 @@ public class Test {
                     && session.getTransaction().isActive()) {
                 tx = session.getTransaction();
             } else {
+                
                 tx = session.beginTransaction();
             }
+            
+            loadingFrame.ChangeStatementLabel("Connexion réussie...");
+            loadingFrame.setVisible(false);
             
 
 //            Adresse adresse = new Adresse("4", "Rue des cerises", "LAVAL", "53000", "FRANGLETERRE");
@@ -52,8 +58,7 @@ public class Test {
            Compagnie compagnie = new Compagnie("créole");
            Compagnie compagnie2 = new Compagnie("7ieme");
            CompagnieFacade compagnieFacade = new CompagnieFacade(session);
-           compagnieFacade.creer(compagnie);
-           compagnieFacade.creer(compagnie2);
+
            List<Compagnie> compagnies = compagnieFacade.listerArtiste(3);
          
             
@@ -64,6 +69,7 @@ public class Test {
             
             re.printStackTrace();
             
+       
             if (tx != null && tx.isActive()) {
                 try {
                     tx.rollback();

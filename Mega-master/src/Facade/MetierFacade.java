@@ -20,24 +20,34 @@ public class MetierFacade {
     public MetierFacade(Session session) {
         this.session = session;
     }
-
+    /**
+     * Création d'un métier 
+     */  
     public void creer(Metier metier) {
         session.persist(metier);
     }
-
+    /**
+     * Modification d'un metier 
+     */  
     public void modifier(Metier metier) {
         Metier entity = (Metier) session.merge(metier);
         session.persist(entity);
     }
-
+    /**
+     * Suppression d'un metier
+     */  
     public void supprimer(Metier metier) {
         session.delete(metier);
     }
-
+    /**
+     * Suppression des metiers
+     */  
     public List<Metier> lister() {
         return session.createQuery("from Metier").list();
     }
-
+    /**
+     * Recherche d'un metier par son identfiant
+     */  
     public Metier litParId(Integer id) {
         try {
             return (Metier) session.createQuery("from Metier a where a.identifiant = :identifiant").setInteger("identifiant", id).uniqueResult();

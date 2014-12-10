@@ -28,6 +28,8 @@ public class Offre {
     private Date dateDebut;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateFin;
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateEmission;
     private int nbPoste;
     private int duree;
     @ManyToOne
@@ -127,6 +129,14 @@ public class Offre {
         this.remuneration = remuneration;
     }
 
+    public Date getDateEmission() {
+        return dateEmission;
+    }
+
+    public void setDateEmission(Date dateEmission) {
+        this.dateEmission = dateEmission;
+    }
+
 	// Constructors
     public Offre() {
     }
@@ -139,6 +149,7 @@ public class Offre {
         this.dateFin = dateFin;
         this.nbPoste = nbPoste;
         this.duree = duree;
+        this.dateEmission = new Date();
     }
 	// Methods
 
