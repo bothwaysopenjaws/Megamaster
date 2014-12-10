@@ -8,7 +8,7 @@
  */
 package Facade;
 
-import Classes.Candidature;
+import Classes.Competence;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -20,29 +20,42 @@ public class CompetenceFacade {
     public CompetenceFacade(Session session) {
         this.session = session;
     }
-
-    public void creer(Candidature candidature) {
-        session.persist(candidature);
+    /**
+     * Ajout d'une competence à la BDD
+     */  
+    public void creer(Competence competence) {
+        session.persist(competence);
     }
-
-    public void modifier(Candidature candidature) {
-        Candidature entity = (Candidature) session.merge(candidature);
+    /**
+     * Modification d'une competence à la BDD
+     */  
+    public void modifier(Competence competence) {
+        Competence entity = (Competence) session.merge(competence);
         session.persist(entity);
     }
-
-    public void supprimer(Candidature candidature) {
-        session.delete(candidature);
+    /**
+     * Suppression d'une competence
+     */  
+    public void supprimer(Competence competence) {
+        session.delete(competence);
     }
-
-    public List<Candidature> lister() {
-        return session.createQuery("from Candidature").list();
+    /**
+     * Liste des competences
+     */  
+    public List<Competence> lister() {
+        return session.createQuery("from Competence").list();
     }
+    
+    /**
+     * liste des artistes d'une Competence
+     * @param identifiant
+     * @return 
+     */      
+    public List<Competence> listerArtiste(int identifiant) {
+        return session.createQuery("from Artiste where Competence.identifiant = :identifiant").setInteger("identifiant", identifiant).list();
+    }    
+    
+    
 
-    public Candidature litParId(Integer id) {
-        try {
-            return (Candidature) session.createQuery("from Candidature a where a.identifiant = :identifiant").setInteger("identifiant", id).uniqueResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
+
 }

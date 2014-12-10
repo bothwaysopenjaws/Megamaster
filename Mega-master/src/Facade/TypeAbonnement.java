@@ -24,13 +24,13 @@ public class TypeAbonnement {
         session.persist(typeAbonnement);
     }
 
-    public void modifier(TypeAbonnement adresse) {
-        TypeAbonnement entity = (TypeAbonnement) session.merge(adresse);
+    public void modifier(TypeAbonnement typeAbonnement) {
+        TypeAbonnement entity = (TypeAbonnement) session.merge(typeAbonnement);
         session.persist(entity);
     }
 
-    public void supprimer(TypeAbonnement adresse) {
-        session.delete(adresse);
+    public void supprimer(TypeAbonnement typeAbonnement) {
+        session.delete(typeAbonnement);
     }
 
     public List<TypeAbonnement> lister() {

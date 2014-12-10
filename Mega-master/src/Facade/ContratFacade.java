@@ -1,11 +1,4 @@
-/*
- * OperationFacade.java
- *
- * Created on 8 decembre 2006, 12:14
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+
 package Facade;
 
 import Classes.Contrat;
@@ -20,29 +13,33 @@ public class ContratFacade {
     public ContratFacade(Session session) {
         this.session = session;
     }
-
+    /**
+     * Création d'un contrat
+     * @param contrat
+     */  
     public void creer(Contrat contrat) {
         session.persist(contrat);
     }
-
+    /**
+     * Modification d'un contrat
+     * @param contrat
+     */  
     public void modifier(Contrat contrat) {
         Contrat entity = (Contrat) session.merge(contrat);
         session.persist(entity);
     }
-
+    /**
+     * Suppression d'un contrat
+     */  
     public void supprimer(Contrat contrat) {
         session.delete(contrat);
     }
-
+    /**
+     * Suppression des contrats
+     */  
     public List<Contrat> lister() {
         return session.createQuery("from Contrat").list();
     }
+    
 
-    public Contrat litParId(Integer id) {
-        try {
-            return (Contrat) session.createQuery("from Contrat a where a.identifiant = :identifiant").setInteger("identifiant", id).uniqueResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

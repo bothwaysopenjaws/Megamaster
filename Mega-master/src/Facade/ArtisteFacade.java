@@ -1,11 +1,4 @@
-/*
- * OperationFacade.java
- *
- * Created on 8 decembre 2006, 12:14
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+
 package Facade;
 
 import Classes.Artiste;
@@ -20,29 +13,33 @@ public class ArtisteFacade {
     public ArtisteFacade(Session session) {
         this.session = session;
     }
-
+    /**
+     * Ajout d'un artiste dans la BDD
+     */  
     public void creer(Artiste artiste) {
         session.persist(artiste);
     }
-
+    /**
+     * Modification d'un artiste dans la BDD
+     * @param artiste
+     */  
     public void modifier(Artiste artiste) {
         Artiste entity = (Artiste) session.merge(artiste);
         session.persist(entity);
     }
-
+    /**
+     * Suppression d'un Artiste dans la BDD
+     * @param artiste
+     */  
     public void supprimer(Artiste artiste) {
         session.delete(artiste);
     }
-
+    /**
+     * Liste des personnes de la BDD
+     * @return 
+     */  
     public List<Artiste> lister() {
         return session.createQuery("from Artiste").list();
     }
 
-    public Artiste litParId(Integer id) {
-        try {
-            return (Artiste) session.createQuery("from Artiste a where a.identifiant = :identifiant").setInteger("identifiant", id).uniqueResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

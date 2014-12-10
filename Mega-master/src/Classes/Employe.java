@@ -82,14 +82,10 @@ public class Employe {
         this.statut = statut;
     }
 	// Constructors	
-
-	// Methods
-    
     public Employe() {
     }
 
-    public Employe(int identifiant, String nom, String prenom, String email, String tel, Adresse adresse, Statut statut) {
-        this.identifiant = identifiant;
+    public Employe( String nom, String prenom, String email, String tel, Adresse adresse, Statut statut) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
@@ -97,5 +93,15 @@ public class Employe {
         this.adresse = adresse;
         this.statut = statut;
     }
+    
+    
+	// Methods
+    
+    
+    
+    
+
+    
+    
 
 }

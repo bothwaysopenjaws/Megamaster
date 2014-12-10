@@ -8,7 +8,7 @@
  */
 package Facade;
 
-import Classes.Contrat;
+import Classes.Diffuseur;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -20,29 +20,31 @@ public class DiffuseurFacade {
     public DiffuseurFacade(Session session) {
         this.session = session;
     }
-
-    public void creer(Contrat adresse) {
-        session.persist(adresse);
+    /**
+     * Création d'une competence
+     * @param diffuseur
+     */  
+    public void creer(Diffuseur diffuseur) {
+        session.persist(diffuseur);
     }
-
-    public void modifier(Contrat adresse) {
-        Contrat entity = (Contrat) session.merge(adresse);
+    /**
+     * Modification d'un diffuseur
+     * @param diffuseur
+     */  
+    public void modifier(Diffuseur diffuseur) {
+        Diffuseur entity = (Diffuseur) session.merge(diffuseur);
         session.persist(entity);
     }
-
-    public void supprimer(Contrat adresse) {
-        session.delete(adresse);
+    /**
+     * Suppression d'un diffuseur
+     * @param diffuseur
+     */  
+    public void supprimer(Diffuseur diffuseur) {
+        session.delete(diffuseur);
     }
 
-    public List<Contrat> lister() {
-        return session.createQuery("from Contrat").list();
+    public List<Diffuseur> lister() {
+        return session.createQuery("from Diffuseur").list();
     }
 
-    public Contrat litParId(Integer id) {
-        try {
-            return (Contrat) session.createQuery("from Contrat a where a.identifiant = :identifiant").setInteger("identifiant", id).uniqueResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
 }

@@ -1,5 +1,6 @@
 package Classes;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,7 @@ public class TypeMedia {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int identifiant;
-    private int libelle;
+    private String libelle;
 
     // Getters and setters
 
@@ -26,11 +27,11 @@ public class TypeMedia {
         this.identifiant = identifiant;
     }
 
-    public int getLibelle() {
+    public String getLibelle() {
         return libelle;
     }
 
-    public void setLibelle(int libelle) {
+    public void setLibelle(String libelle) {
         this.libelle = libelle;
     }
     // Constructors
@@ -38,9 +39,37 @@ public class TypeMedia {
     public TypeMedia() {
     }
 
-    public TypeMedia(int identifiant, int libelle) {
+    public TypeMedia(String libelle) {
         this.libelle = libelle;
     }
 
 	// Methods
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 11 * hash + Objects.hashCode(this.libelle);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TypeMedia other = (TypeMedia) obj;
+        if (!Objects.equals(this.libelle, other.libelle)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
+    
+    
+    
 }

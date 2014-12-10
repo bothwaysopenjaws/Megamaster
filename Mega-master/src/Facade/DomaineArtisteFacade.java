@@ -8,7 +8,7 @@
  */
 package Facade;
 
-import Classes.DomaineArtiste;
+import Classes.*;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -20,16 +20,22 @@ public class DomaineArtisteFacade {
     public DomaineArtisteFacade(Session session) {
         this.session = session;
     }
-
+    /**
+     * Création d'une liaison Artiste-domaine
+     */  
     public void creer(DomaineArtiste domaineArtiste) {
         session.persist(domaineArtiste);
     }
-
+    /**
+     * Modification d'un Artiste-domaine
+     */  
     public void modifier(DomaineArtiste domaineArtiste) {
         DomaineArtiste entity = (DomaineArtiste) session.merge(domaineArtiste);
         session.persist(entity);
     }
-
+    /**
+     * Suppression d'un Artiste sur un domaine
+     */  
     public void supprimer(DomaineArtiste domaineArtiste) {
         session.delete(domaineArtiste);
     }
@@ -37,12 +43,24 @@ public class DomaineArtisteFacade {
     public List<DomaineArtiste> lister() {
         return session.createQuery("from DomaineArtiste").list();
     }
-
-    public DomaineArtiste litParId(Integer id) {
-        try {
-            return (DomaineArtiste) session.createQuery("from DomaineArtiste a where a.identifiant = :identifiant").setInteger("identifiant", id).uniqueResult();
-        } catch (Exception e) {
-            return null;
-        }
-    }
+    
+    /**
+     * liste des domaines d'un artiste
+     * @param identifiant identifiant de l'artiste
+     * @return 
+     */      
+    public List<Domaine> listerDomaineParArtiste(int identifiant) {
+        return session.createQuery("from Domaine where Artiste.identifiant = :identifiant").setInteger("identifiant", identifiant).list();
+    }    
+    
+    /**
+     * liste des artistes d'un Domaine
+     * @param identifiant identitifiant du domaine
+     * @return 
+     */      
+    public List<Artiste> listerArtisteParDomaine(int identifiant) {
+        return session.createQuery("from Artiste where Domaine.identifiant = :identifiant").setInteger("identifiant", identifiant).list();
+    }    
+        
+    
 }

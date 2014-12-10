@@ -1,6 +1,7 @@
 package Classes;
 
 
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,7 +22,7 @@ public class DomaineArtiste {
     private Niveau niveau;
     @ManyToOne(cascade=CascadeType.ALL)
     private Domaine domaine;
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.ALL )
     private Artiste artiste;
 
     // Getters and setters
@@ -57,7 +58,7 @@ public class DomaineArtiste {
     public void setArtiste(Artiste artiste) {
         this.artiste = artiste;
     }
-
+ 
 	// Constructors
     public DomaineArtiste() {
     }
@@ -69,5 +70,29 @@ public class DomaineArtiste {
         this.artiste = artiste;
     }
     // Methods
+@Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.artiste);
+        hash = 37 * hash + Objects.hashCode(this.niveau);
+        hash = 37 * hash + Objects.hashCode(this.domaine);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DomaineArtiste other = (DomaineArtiste) obj;
+        if (!Objects.equals(this.artiste, other.artiste) && !Objects.equals(this.niveau, other.niveau) && !Objects.equals(this.domaine, other.domaine)) {
+            return false;
+        }
+
+        return true;
+    }    
 
 }

@@ -1,4 +1,5 @@
 package Classes;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -56,7 +57,7 @@ public class Metier {
     }
 
 	// Constructors
-	// Methods
+    
     public Metier() {
     }
 
@@ -64,6 +65,40 @@ public class Metier {
         this.nom = nom;
         this.description = description;
         this.domaine = domaine;
+    }    
+	// Methods
+
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.nom);
+        hash = 89 * hash + Objects.hashCode(this.description);
+        hash = 89 * hash + Objects.hashCode(this.domaine);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Metier other = (Metier) obj;
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
+        if (!Objects.equals(this.domaine, other.domaine)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

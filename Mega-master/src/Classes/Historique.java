@@ -103,4 +103,6 @@ public class Historique {
         this.artiste = artiste;
     }
     // Methods
+    
+    
 }
