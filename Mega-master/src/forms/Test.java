@@ -38,6 +38,10 @@ public class Test {
             loadingFrame.ChangeStatementLabel("Connexion réussie...");
             loadingFrame.setVisible(false);
             
+            
+            
+            Accueil accueil = new Accueil();
+            accueil.setVisible(true);
 
 //            Adresse adresse = new Adresse("4", "Rue des cerises", "LAVAL", "53000", "FRANGLETERRE");
 //            
