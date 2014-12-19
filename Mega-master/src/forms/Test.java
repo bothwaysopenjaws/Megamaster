@@ -19,12 +19,15 @@ import java.util.List;
  */
 public class Test {
 
+
+    
+    
     public static void main(String args[]) {
         
         LoadingFrame loadingFrame = new LoadingFrame();
         loadingFrame.setVisible(true);
         loadingFrame.ChangeStatementLabel("Connexion à la base de données...");        
-        Transaction tx = null;
+       Transaction tx = null;
         Session session = getSessionFactory().getCurrentSession();
         try {
             if (session.getTransaction() != null
@@ -38,10 +41,9 @@ public class Test {
             loadingFrame.ChangeStatementLabel("Connexion réussie...");
             loadingFrame.setVisible(false);
             
-            
-            
-            Accueil accueil = new Accueil();
-            accueil.setVisible(true);
+            Identification identification = new Identification();
+            identification.setVisible(true);
+          
 
 //            Adresse adresse = new Adresse("4", "Rue des cerises", "LAVAL", "53000", "FRANGLETERRE");
 //            
@@ -55,16 +57,7 @@ public class Test {
 //            
 //            
 //           AdresseFacade adresseFacade = new AdresseFacade(session);
-            
-
-
-            
-           Compagnie compagnie = new Compagnie("créole");
-           Compagnie compagnie2 = new Compagnie("7ieme");
-           CompagnieFacade compagnieFacade = new CompagnieFacade(session);
-
-           List<Compagnie> compagnies = compagnieFacade.listerArtiste(3);
-         
+                
             
             //session.flush();
             tx.commit();
@@ -81,6 +74,6 @@ public class Test {
                     he.printStackTrace();
                 }
             }
-        }
+        } 
     }
 }

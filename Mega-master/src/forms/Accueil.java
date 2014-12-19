@@ -12,31 +12,93 @@ import Facade.*;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
-/**
- *
- * @author jeoffrey
- */
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import static Hibernate.HibernateUtil.getSessionFactory;
+import java.util.List;
+
 public class Accueil extends javax.swing.JFrame {
 
     private JPanel currentPanel = null;
+    private Session session;
+
+    public Session getSession() {
+        return session;
+    }
+    public void setSession(Session session) {
+        this.session = session;
+    }
+    
     
     public Accueil() {
+                
+        this.loadCandidature();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.ListeCandidature.getModel();
         initComponents();
          monTabbedPane.setUI(new BasicTabbedPaneUI() {
             @Override
             protected int calculateTabAreaHeight(int tab_placement, int run_count, int max_tab_height) {
                 return 0;
             }
-        });
+            });
          
-         refreshListAnnonceur();
+    
                  }
     
     public void refreshListAnnonceur(){
 
         
-    }
+    }   
 
+  // Méthodes
+    
+    // Remplissage des listes
+    
+    public void loadCandidature(){
+        
+        Transaction tx = null;
+        Session session = getSessionFactory().getCurrentSession();
+        try {
+            if (session.getTransaction() != null
+                    && session.getTransaction().isActive()) {
+                tx = session.getTransaction();
+            } else {
+                
+                tx = session.beginTransaction();
+            }        
+        CandidatureFacade candidatureFacade = new CandidatureFacade(session);
+
+        DefaultListModel model = new DefaultListModel();        
+        for(int i=0;i<candidatureFacade.lister().size();i++){
+		model.addElement(candidatureFacade.lister().get(i));
+	} 
+          this.ListeCandidature.setModel(model);    
+            tx.commit();
+
+        } catch (Exception re) {
+            
+            re.printStackTrace();
+            
+       
+            if (tx != null && tx.isActive()) {
+                try {
+                    tx.rollback();
+                } catch (HibernateException he) {
+                    he.printStackTrace();
+                }
+            }
+        }        
+    }
+    
+    //Suppression d'une candidature
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -147,8 +209,8 @@ public class Accueil extends javax.swing.JFrame {
         ListeDiffuseur = new javax.swing.JList();
         jLabel28 = new javax.swing.JLabel();
         RechercheDiffuseur = new javax.swing.JTextField();
-        AjouterDiffuseur = new javax.swing.JButton();
-        SupprimerDiffuseur = new javax.swing.JButton();
+        ajouterDiffuseur = new javax.swing.JButton();
+        supprimerDiffuseur = new javax.swing.JButton();
         GestionDiffuseurPanel = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
@@ -159,6 +221,7 @@ public class Accueil extends javax.swing.JFrame {
         jLabel30 = new javax.swing.JLabel();
         jScrollPane8 = new javax.swing.JScrollPane();
         DescriptionDiffuseur = new javax.swing.JTextArea();
+        modifierDiffuseur = new javax.swing.JButton();
         jPanelGestionOffre = new javax.swing.JPanel();
         jScrollPane9 = new javax.swing.JScrollPane();
         ListeDiffuseur1 = new javax.swing.JList();
@@ -279,7 +342,7 @@ public class Accueil extends javax.swing.JFrame {
                                 .addComponent(ButtonGestionOffre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(ButtonGestionArtiste, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(ButtonGestionDiffuseur, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)))))
-                .addContainerGap(475, Short.MAX_VALUE))
+                .addContainerGap(502, Short.MAX_VALUE))
         );
         AccueilLayout.setVerticalGroup(
             AccueilLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,7 +460,7 @@ public class Accueil extends javax.swing.JFrame {
                         .addComponent(AjouterAnnonceur, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(SupprimerAnnonceur)))
-                .addContainerGap(626, Short.MAX_VALUE))
+                .addContainerGap(645, Short.MAX_VALUE))
         );
         jPanelGestionAnnonceurLayout.setVerticalGroup(
             jPanelGestionAnnonceurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -534,7 +597,7 @@ public class Accueil extends javax.swing.JFrame {
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
                         .addComponent(GestionCandidaturePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(554, Short.MAX_VALUE))
+                .addContainerGap(556, Short.MAX_VALUE))
         );
         jPanelGestionCandidaturesLayout.setVerticalGroup(
             jPanelGestionCandidaturesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -560,7 +623,7 @@ public class Accueil extends javax.swing.JFrame {
         jLabel1.setText("Rechercher");
 
         ListeArtiste.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "Item 1", " " };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -887,6 +950,11 @@ public class Accueil extends javax.swing.JFrame {
         ModifierArtiste.setText("Modifier");
 
         AjouterArtiste.setText("Ajouter");
+        AjouterArtiste.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AjouterArtisteActionPerformed(evt);
+            }
+        });
 
         SupprimerArtiste.setText("Supprimer");
 
@@ -943,7 +1011,7 @@ public class Accueil extends javax.swing.JFrame {
                     .addComponent(RechercherArtiste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelGestionArtisteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(GestionArtistePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+                    .addComponent(GestionArtistePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 475, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addContainerGap(797, Short.MAX_VALUE))
         );
@@ -961,14 +1029,14 @@ public class Accueil extends javax.swing.JFrame {
 
         jLabel28.setText("Rechercher");
 
-        AjouterDiffuseur.setText("Ajouter");
-        AjouterDiffuseur.addActionListener(new java.awt.event.ActionListener() {
+        ajouterDiffuseur.setText("Ajouter");
+        ajouterDiffuseur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AjouterDiffuseurActionPerformed(evt);
+                ajouterDiffuseurActionPerformed(evt);
             }
         });
 
-        SupprimerDiffuseur.setText("Supprimer");
+        supprimerDiffuseur.setText("Supprimer");
 
         GestionDiffuseurPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Gestion Diffuseur", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 14))); // NOI18N
 
@@ -1030,6 +1098,13 @@ public class Accueil extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        modifierDiffuseur.setText("Ajouter");
+        modifierDiffuseur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifierDiffuseurActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelGestionDiffuseurLayout = new javax.swing.GroupLayout(jPanelGestionDiffuseur);
         jPanelGestionDiffuseur.setLayout(jPanelGestionDiffuseurLayout);
         jPanelGestionDiffuseurLayout.setHorizontalGroup(
@@ -1042,13 +1117,15 @@ public class Accueil extends javax.swing.JFrame {
                         .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(RechercheDiffuseur, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(jPanelGestionDiffuseurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(GestionDiffuseurPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelGestionDiffuseurLayout.createSequentialGroup()
-                        .addComponent(AjouterDiffuseur)
+                        .addComponent(modifierDiffuseur, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(SupprimerDiffuseur)))
+                        .addComponent(ajouterDiffuseur)
+                        .addGap(18, 18, 18)
+                        .addComponent(supprimerDiffuseur)))
                 .addGap(628, 628, 628))
         );
         jPanelGestionDiffuseurLayout.setVerticalGroup(
@@ -1061,13 +1138,14 @@ public class Accueil extends javax.swing.JFrame {
                             .addComponent(jLabel28)
                             .addComponent(RechercheDiffuseur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelGestionDiffuseurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(SupprimerDiffuseur)
-                        .addComponent(AjouterDiffuseur)))
+                        .addComponent(supprimerDiffuseur)
+                        .addComponent(ajouterDiffuseur)
+                        .addComponent(modifierDiffuseur)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelGestionDiffuseurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(GestionDiffuseurPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(816, Short.MAX_VALUE))
+                .addContainerGap(876, Short.MAX_VALUE))
         );
 
         monTabbedPane.addTab("Gestion Diffuseur", jPanelGestionDiffuseur);
@@ -1207,7 +1285,7 @@ public class Accueil extends javax.swing.JFrame {
                     .addGroup(jPanelGestionOffreLayout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(GestionOffrePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(524, Short.MAX_VALUE))
+                .addContainerGap(553, Short.MAX_VALUE))
         );
         jPanelGestionOffreLayout.setVerticalGroup(
             jPanelGestionOffreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1307,6 +1385,30 @@ public class Accueil extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     private void jMenuItemGestionDiffuseurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGestionDiffuseurActionPerformed
         monTabbedPane.setSelectedIndex(4);
     }//GEN-LAST:event_jMenuItemGestionDiffuseurActionPerformed
@@ -1331,9 +1433,41 @@ public class Accueil extends javax.swing.JFrame {
        monTabbedPane.setSelectedIndex(0);
     }//GEN-LAST:event_jMenuAccueilMenuSelected
 
-    private void AjouterDiffuseurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AjouterDiffuseurActionPerformed
+    private void ajouterDiffuseurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajouterDiffuseurActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_AjouterDiffuseurActionPerformed
+        Diffuseur difTemp = new Diffuseur( this.NomDiffuseur.getText(), this.TelephoneDiffuseur.getText(), this.MailDiffuseur.getText());
+
+        
+        Transaction tx = null;
+        Session session = getSessionFactory().getCurrentSession();
+        try {
+            if (session.getTransaction() != null
+                    && session.getTransaction().isActive()) {
+                tx = session.getTransaction();
+            } else {
+                
+                tx = session.beginTransaction();
+            }   
+            DiffuseurFacade difFacade = new DiffuseurFacade(session);
+            difFacade.creer(difTemp);
+            tx.commit();
+
+        } catch (Exception re) {
+            
+            re.printStackTrace();
+            
+       
+            if (tx != null && tx.isActive()) {
+                try {
+                    tx.rollback();
+                } catch (HibernateException he) {
+                    he.printStackTrace();
+                }
+            }
+        }        
+        
+        
+    }//GEN-LAST:event_ajouterDiffuseurActionPerformed
 
     private void jRadioButtonCompetenceInexperimenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCompetenceInexperimenteActionPerformed
         // TODO add your handling code here:
@@ -1374,6 +1508,14 @@ public class Accueil extends javax.swing.JFrame {
     private void MailCandidatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MailCandidatureActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MailCandidatureActionPerformed
+
+    private void modifierDiffuseurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifierDiffuseurActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_modifierDiffuseurActionPerformed
+
+    private void AjouterArtisteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AjouterArtisteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AjouterArtisteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1416,7 +1558,6 @@ public class Accueil extends javax.swing.JFrame {
     private javax.swing.JButton AjouterAnnonceur;
     private javax.swing.JButton AjouterArtiste;
     private javax.swing.JButton AjouterCandidature;
-    private javax.swing.JButton AjouterDiffuseur;
     private javax.swing.JButton AjouterOffre;
     private javax.swing.JButton ButtonGestionAnnonceur;
     private javax.swing.JButton ButtonGestionArtiste;
@@ -1459,13 +1600,13 @@ public class Accueil extends javax.swing.JFrame {
     private javax.swing.JButton SupprimerAnnonceur;
     private javax.swing.JButton SupprimerArtiste;
     private javax.swing.JButton SupprimerCandidature;
-    private javax.swing.JButton SupprimerDiffuseur;
     private javax.swing.JButton SupprimerOffre;
     private javax.swing.JTabbedPane TabbedPanelArtiste;
     private javax.swing.JTextField TelephoneAnnonceur;
     private javax.swing.JTextField TelephoneDiffuseur;
     private javax.swing.JTextField TelephoneDiffuseur1;
     private javax.swing.JTextField TitreCandidature;
+    private javax.swing.JButton ajouterDiffuseur;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonAccueilNotifications;
     private javax.swing.JButton jButtonAjouterHistoiriqueArtiste;
@@ -1558,6 +1699,9 @@ public class Accueil extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldNomSociete;
     private javax.swing.JTextField jTextFieldPaysArtisteAdresse;
     private javax.swing.JTextField jTextFieldVilleRueArtiste;
+    private javax.swing.JButton modifierDiffuseur;
     private javax.swing.JTabbedPane monTabbedPane;
+    private javax.swing.JButton supprimerDiffuseur;
     // End of variables declaration//GEN-END:variables
+
 }

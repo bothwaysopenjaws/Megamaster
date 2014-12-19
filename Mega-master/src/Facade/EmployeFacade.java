@@ -1,11 +1,4 @@
-/*
- * OperationFacade.java
- *
- * Created on 8 decembre 2006, 12:14
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+
 package Facade;
 
 import Classes.Employe;
@@ -55,4 +48,16 @@ public class EmployeFacade {
             return null;
         }
     }
-}
+        
+
+    public Employe rechercheIdPw(String id, String pwd) {
+        return (Employe) session.createQuery("from Employe a where a.id = :id and a.pwd=:pwd").setString("id", id).setString("pwd", pwd).uniqueResult();
+        
+        //
+    }        
+           
+        
+    }
+    
+    
+

@@ -113,7 +113,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,-65,0,0,5,127"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,3,-60,0,0,5,-107"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -190,7 +190,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="475" max="32767" attributes="0"/>
+                      <EmptySpace pref="502" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -352,7 +352,7 @@
                               <Component id="SupprimerAnnonceur" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="626" max="32767" attributes="0"/>
+                      <EmptySpace pref="645" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -554,7 +554,7 @@
                               <Component id="GestionCandidaturePanel" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="554" max="32767" attributes="0"/>
+                      <EmptySpace pref="556" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -824,12 +824,9 @@
                 <Component class="javax.swing.JList" name="ListeArtiste">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                      <StringArray count="5">
+                      <StringArray count="2">
                         <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                        <StringItem index="4" value="Item 5"/>
+                        <StringItem index="1" value=" "/>
                       </StringArray>
                     </Property>
                   </Properties>
@@ -1443,6 +1440,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Ajouter"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AjouterArtisteActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="SupprimerArtiste">
                   <Properties>
@@ -1480,13 +1480,15 @@
                               <Component id="RechercheDiffuseur" min="-2" pref="134" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="19" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="GestionDiffuseurPanel" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="AjouterDiffuseur" min="-2" max="-2" attributes="0"/>
+                              <Component id="modifierDiffuseur" min="-2" pref="84" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="SupprimerDiffuseur" min="-2" max="-2" attributes="0"/>
+                              <Component id="ajouterDiffuseur" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="supprimerDiffuseur" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="628" max="-2" attributes="0"/>
@@ -1505,8 +1507,9 @@
                               </Group>
                           </Group>
                           <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                              <Component id="SupprimerDiffuseur" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="AjouterDiffuseur" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="supprimerDiffuseur" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="ajouterDiffuseur" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="modifierDiffuseur" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1514,7 +1517,7 @@
                           <Component id="GestionDiffuseurPanel" max="32767" attributes="0"/>
                           <Component id="jScrollPane7" min="-2" pref="459" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="816" max="32767" attributes="0"/>
+                      <EmptySpace pref="876" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1549,15 +1552,15 @@
             </Component>
             <Component class="javax.swing.JTextField" name="RechercheDiffuseur">
             </Component>
-            <Component class="javax.swing.JButton" name="AjouterDiffuseur">
+            <Component class="javax.swing.JButton" name="ajouterDiffuseur">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ajouter"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AjouterDiffuseurActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ajouterDiffuseurActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="SupprimerDiffuseur">
+            <Component class="javax.swing.JButton" name="supprimerDiffuseur">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Supprimer"/>
               </Properties>
@@ -1674,6 +1677,14 @@
                 </Container>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JButton" name="modifierDiffuseur">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ajouter"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modifierDiffuseurActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanelGestionOffre">
@@ -1715,7 +1726,7 @@
                               <Component id="GestionOffrePanel" min="-2" pref="625" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="524" max="32767" attributes="0"/>
+                      <EmptySpace pref="553" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

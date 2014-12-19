@@ -5,11 +5,21 @@
  */
 package forms;
 
-/**
- *
- * @author jeoffrey
- */
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import Classes.*;
+import Facade.*;
+import static Hibernate.HibernateUtil.getSessionFactory;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import org.hibernate.HibernateException;
+        
+
+
 public class Identification extends javax.swing.JFrame {
+    private Object Facade;
 
     /**
      * Creates new form Identification
@@ -17,8 +27,10 @@ public class Identification extends javax.swing.JFrame {
     public Identification() {
         
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,14 +50,24 @@ public class Identification extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabelIsCorrect = new javax.swing.JLabel();
+        ButtonQuitter = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MégaGestion");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setUndecorated(true);
+        setResizable(false);
 
         PanelIdentification.setBackground(new java.awt.Color(255, 255, 255));
         PanelIdentification.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
 
         ButtonValider.setText("Valider");
+        ButtonValider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonValiderActionPerformed(evt);
+            }
+        });
 
         LabelLogin.setFont(new java.awt.Font("Trebuchet MS", 0, 12)); // NOI18N
         LabelLogin.setText("Identifiant :");
@@ -60,6 +82,13 @@ public class Identification extends javax.swing.JFrame {
         jLabel2.setText("Bienvenue");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/MGReSize.png"))); // NOI18N
+
+        ButtonQuitter.setText("Quitter");
+        ButtonQuitter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonQuitterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelIdentificationLayout = new javax.swing.GroupLayout(PanelIdentification);
         PanelIdentification.setLayout(PanelIdentificationLayout);
@@ -76,8 +105,12 @@ public class Identification extends javax.swing.JFrame {
                         .addGroup(PanelIdentificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TextFieldIdentifiant, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
+                            .addGroup(PanelIdentificationLayout.createSequentialGroup()
+                                .addComponent(ButtonValider, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(ButtonQuitter, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabelIsCorrect, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(PanelIdentificationLayout.createSequentialGroup()
                         .addGap(214, 214, 214)
                         .addComponent(jLabel1)))
@@ -101,12 +134,16 @@ public class Identification extends javax.swing.JFrame {
                 .addGroup(PanelIdentificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LabelLogin)
                     .addComponent(TextFieldIdentifiant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(PanelIdentificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(LabelMdp))
-                .addGap(57, 57, 57)
-                .addComponent(ButtonValider)
+                .addGap(23, 23, 23)
+                .addComponent(jLabelIsCorrect, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelIdentificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ButtonValider)
+                    .addComponent(ButtonQuitter))
                 .addGap(32, 32, 32)
                 .addComponent(jLabel1)
                 .addContainerGap())
@@ -120,11 +157,70 @@ public class Identification extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelIdentification, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(PanelIdentification, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ButtonValiderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonValiderActionPerformed
+        // TODO add your handling code here:
+
+        Transaction tx = null;
+        Session session = getSessionFactory().getCurrentSession();
+        try {
+            if (session.getTransaction() != null
+                    && session.getTransaction().isActive()) {
+                tx = session.getTransaction();
+            } else {
+                
+                tx = session.beginTransaction();
+            }
+
+
+            EmployeFacade employeFacade = new EmployeFacade(session);
+            String iD = this.TextFieldIdentifiant.getText();
+            String pwd = this.PasswordField.getText();
+            Employe employe = employeFacade.rechercheIdPw(iD, pwd);
+            
+            if (employe !=null)
+            {              
+                Accueil accueil = new Accueil();
+                accueil.setVisible(true);
+                this.dispose();              
+            }
+            else
+            {
+                jLabelIsCorrect.setText("erreur de saisie");
+            }
+            
+            
+            
+            
+                
+            tx.commit();
+
+        } catch (Exception re) {
+            
+            re.printStackTrace();
+            
+       
+            if (tx != null && tx.isActive()) {
+                try {
+                    tx.rollback();
+                } catch (HibernateException he) {
+                    he.printStackTrace();
+                }
+            }
+        }        
+    }//GEN-LAST:event_ButtonValiderActionPerformed
+
+    private void ButtonQuitterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonQuitterActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_ButtonQuitterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,6 +259,7 @@ public class Identification extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ButtonQuitter;
     private javax.swing.JButton ButtonValider;
     private javax.swing.JLabel LabelLogin;
     private javax.swing.JLabel LabelMdp;
@@ -172,5 +269,6 @@ public class Identification extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelIsCorrect;
     // End of variables declaration//GEN-END:variables
 }

@@ -18,6 +18,8 @@ public class Employe {
     private int identifiant;
     private String nom;
     private String prenom;
+    private String id;  
+    private String pwd;
     private String email;
     private String tel;
     @ManyToOne(cascade=CascadeType.ALL)
@@ -25,6 +27,22 @@ public class Employe {
     @ManyToOne
     private Statut statut;
     // Getters and setters
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
 
     public int getIdentifiant() {
         return identifiant;
@@ -92,6 +110,8 @@ public class Employe {
         this.tel = tel;
         this.adresse = adresse;
         this.statut = statut;
+        this.id = "admin";
+        this.pwd = "admin";
     }
     
     
